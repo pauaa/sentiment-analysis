@@ -5,6 +5,10 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_selection import SelectPercentile, f_classif
 from nltk.stem.snowball import SnowballStemmer
 
+POSITIVE = 2
+NEUTRAL = 1
+NEGATIVE = 0
+
 
 def stem(stemmer, word):
     # stem the given word
@@ -14,9 +18,9 @@ def stem(stemmer, word):
 def normalize_labels(labels):
     # convert labels to numbers
     lookup = {
-        "positive": 2,
-        "neutral": 1,
-        "negative": 0
+        "positive": POSITIVE,
+        "neutral": NEUTRAL,
+        "negative": NEGATIVE
     }
     labels = [lookup[l] for l in labels]
     return labels
@@ -40,7 +44,6 @@ def split_labels_features(data):
 
 
 def preprocess(training_file='train_data.tsv', testing_file='devel_data.tsv'):
-
     # get training data from a file
     training_file_handler = codecs.open(training_file, 'r', encoding='utf-8')
     training_lines = training_file_handler.readlines()
